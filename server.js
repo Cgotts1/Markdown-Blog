@@ -1,12 +1,17 @@
 const express = require('express')    //Requiring express
+const mongoose = require('mongoose')
 const articleRouter = require('./routes/articles') //acess to router file
 const app = express()
+
+
+mongoose.connect('mongodb://localhost/blog', mongoose.set('strictQuery', false)) // CHeck back with this one
+
 
 app.set('view engine', 'ejs')    //view engine set to ejs(writing all views using ejs)(viewengine converts ejs to html)
 
 
 app.use('/articles',articleRouter)  //using the router file we required
-
+app.use(express.urlencoded({extended: false}))
 
 app.get('/', (req, res) =>{
     const articles = [{
